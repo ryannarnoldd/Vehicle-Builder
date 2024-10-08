@@ -1,3 +1,4 @@
+// Imports all the necessary classes and interfaces.
 import inquirer from "inquirer";
 import Truck from "./Truck.js";
 import Car from "./Car.js";
@@ -5,15 +6,18 @@ import Motorbike from "./Motorbike.js";
 import Wheel from "./Wheel.js";
 import Vehicle from "./Vehicle.js";
 
+// Creates run instance of class
 class Cli {
   vehicles: (Car | Truck | Motorbike)[];
   selectedVehicleVin: string | undefined;
   exit: boolean = false;
 
+  // Constructor for Cli class.
   constructor(vehicles: (Car | Truck | Motorbike)[]) {
     this.vehicles = vehicles;
   }
 
+  // Will create Vin.
   static generateVin(): string {
     return (
       Math.random().toString(36).substring(2, 15) +
@@ -21,6 +25,7 @@ class Cli {
     );
   }
 
+  // Function to choose a vehicle.
   chooseVehicle(): void {
     inquirer
       .prompt([
@@ -42,6 +47,7 @@ class Cli {
       });
   }
 
+  // Function to create a vehicle.
   createVehicle(): void {
     inquirer
       .prompt([
@@ -65,6 +71,7 @@ class Cli {
       });
   }
 
+  // Function to create a car.
   createCar(): void {
     inquirer
       .prompt([
@@ -100,6 +107,7 @@ class Cli {
         },
       ])
       .then((answers) => {
+        // Create a new car object.
         const car = new Car(
           Cli.generateVin(),
           answers.color,
@@ -110,12 +118,14 @@ class Cli {
           parseInt(answers.topSpeed),
           []
         );
+        // Pushes car and performs actions.
         this.vehicles.push(car);
         this.selectedVehicleVin = car.vin;
         this.performActions();
       });
   }
 
+  // Function to create a truck.
   createTruck(): void {
     inquirer
       .prompt([
@@ -173,6 +183,7 @@ class Cli {
       });
   }
 
+  // Function to create a motorbike.
   createMotorbike(): void {
     inquirer
       .prompt([
@@ -238,12 +249,14 @@ class Cli {
           parseInt(answers.topSpeed),
           []
         );
+        // Pushes motorbike and performs actions.
         this.vehicles.push(motorbike);
         this.selectedVehicleVin = motorbike.vin;
         this.performActions();
       });
   }
 
+  // Function to find vehicle to tow looks for a truck.
   findVehicleToTow(): void {
     inquirer
       .prompt([
@@ -261,6 +274,7 @@ class Cli {
       ])
       .then((answers) => {
 
+        // if you can tow it (it cannot tow itself)
         if (answers.vehicleToTow.vin === this.selectedVehicleVin) {
 
           console.log(`Truck cannot tow itself. Select a different vehicle to tow.`);
@@ -281,6 +295,8 @@ class Cli {
         }
       })
   }
+
+  // Function to perform actions. Basically the main menu.
   performActions(): void {
     inquirer
       .prompt([
@@ -305,6 +321,7 @@ class Cli {
         },
       ])
       .then((answers) => {
+        // Could optimise this.
         if (answers.action === 'Print details') {
           for (let i = 0; i < this.vehicles.length; i++) {
             if (this.vehicles[i].vin === this.selectedVehicleVin) {
@@ -356,12 +373,16 @@ class Cli {
         }
         else if (answers.action === 'Tow') {
 
+          // If the vehicle is a truck, it can tow.
           for (let i = 0; i < this.vehicles.length; i++) {
             if (this.vehicles[i].vin === this.selectedVehicleVin && this.vehicles[i] instanceof Truck) {
               console.log(`Truck towing started`);
               this.findVehicleToTow();
               return;
             }
+
+
+            // Selecting a truck is necessary.
             else {
               console.log(`Select a Truck to begin towing vehicles.`);
               this.performActions();
@@ -370,6 +391,7 @@ class Cli {
           }
         }
 
+        // Only a motorbike can perform a wheelie.
         else if (answers.action === 'Wheelie') {
           let wheelieRun = false;
           for (let i = 0; i < this.vehicles.length; i++) {
@@ -390,6 +412,7 @@ class Cli {
         }
 
 
+        // Back to selecting a vehicle.
         else if (answers.action === 'Select or create another vehicle') {
           this.startCli();
           return;
@@ -402,6 +425,7 @@ class Cli {
       });
   }
 
+  // Function to start the CLI.
   startCli(): void {
     inquirer
       .prompt([
@@ -414,6 +438,7 @@ class Cli {
         },
       ])
       .then((answers) => {
+
         if (answers.CreateOrSelect === 'Create a new vehicle') {
           this.createVehicle();
         } else {
@@ -423,4 +448,5 @@ class Cli {
   }
 }
 
+// Exports Cli class to index.ts
 export default Cli;

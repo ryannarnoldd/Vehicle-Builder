@@ -1,7 +1,7 @@
 {
-  "name": "develop",
+  "name": "vehicle-builder-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is the Vehicle Builder Project",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {

@@ -19,12 +19,10 @@ const car1 = new Car(
   'Camry',
   2021,
   3000,
-  130,
-  []
+  130, []
 );
 
-
-
+ 
 // Creates a new motorbike object.
 const motorbike1Wheels = [new Wheel(17, "Michelin"), new Wheel(17, "Michelin")];
 const motorbike1 = new Motorbike(Cli.generateVin(), "black", "Harley Davidson", "Sportster", 2021, 500, 125, motorbike1Wheels);

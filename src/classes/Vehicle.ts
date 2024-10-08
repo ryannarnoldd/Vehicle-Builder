@@ -4,8 +4,10 @@ class Vehicle implements Driveable {
   started: boolean;
   currentSpeed: number;
 
+  // Constructor for Vehicle class.
   constructor() {
     this.started = false;
+    // local.
     this.currentSpeed = 0;
   }
 
@@ -14,11 +16,13 @@ class Vehicle implements Driveable {
     console.log(`Vehicle current speed: ${this.currentSpeed} mph`);
   }
 
+  // Every vehicle will have start method.
   start(): void {
     this.started = true;
     console.log('Vehicle started');
   }
 
+  // Every vehicle will have accelerate method.
   accelerate(change: number): void {
     if (this.started) {
       this.currentSpeed += change;
@@ -28,6 +32,7 @@ class Vehicle implements Driveable {
     }
   }
 
+  // Every vehicle will have decelerate method.
   decelerate(change: number): void {
     if (this.started) {
       this.currentSpeed -= change;
@@ -42,6 +47,7 @@ class Vehicle implements Driveable {
     this.started = false;
     console.log('Vehicle stopped');
   }
+
 
   turn(direction: string): void {
     if (this.started) {
@@ -60,4 +66,5 @@ class Vehicle implements Driveable {
   }
 }
 
+// Export the Vehicle class.
 export default Vehicle;

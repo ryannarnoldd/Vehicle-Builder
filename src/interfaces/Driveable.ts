@@ -1,3 +1,4 @@
+// Standard Driveable interface for all vehicles. Made for Vehicle class.
 interface Driveable {
   started: boolean;
   currentSpeed: number;

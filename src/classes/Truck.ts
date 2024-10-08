@@ -1,10 +1,12 @@
+// Imports Vehicle class, Motorbike class, Car class, Wheel class, and AbleToTow interface.
 import Vehicle from './Vehicle.js';
 import Motorbike from './Motorbike.js';
 import Car from './Car.js';
 import Wheel from './Wheel.js';
 import AbleToTow from '../interfaces/AbleToTow.js';
 
-class Truck extends Vehicle {
+// Truck class that extends Vehicle class and implements AbleToTow!!! interface.
+class Truck extends Vehicle implements AbleToTow {
   vin: string;
   color: string;
   make: string;
@@ -27,6 +29,7 @@ class Truck extends Vehicle {
     wheels: Wheel[],
 
   ) {
+    // Uses super.
     super();
     this.vin = vin;
     this.color = color;
@@ -36,12 +39,16 @@ class Truck extends Vehicle {
     this.weight = weight;
     this.topSpeed = topSpeed;
     this.towingCapacity = towingCapacity;
+
+    // If the wheels array is not provided, create a new array with 4 Wheel objects. Same thing. (Could optimise this)
     if (wheels.length !== 4) {
       this.wheels = [new Wheel(), new Wheel(), new Wheel(), new Wheel()];
     } else {
       this.wheels = wheels;
     }
   }
+
+  // function to tow any vehicle using union operator.
   tow(vehicle: Truck | Motorbike | Car): void {
     if (vehicle.vin != '') {
       console.log(vehicle.make);
@@ -50,11 +57,12 @@ class Truck extends Vehicle {
       console.log(vehicle.model);
     }
 
+    // If the weight of the vehicle is less than or equal to the towing capacity, the vehicle is towed.
     if (vehicle.weight <= this.towingCapacity) {
-      console.log(`${vehicle.make} ${vehicle.model} is being towed`);
+      console.log(`${vehicle.make} ${vehicle.model} is towed`);
     }
     else {
-      console.log((`${vehicle.make} ${vehicle.model} is too heavy to be towed`));
+      console.log((`${vehicle.make} ${vehicle.model} is too heavy.`));
     }
   }
 
@@ -67,18 +75,15 @@ class Truck extends Vehicle {
     console.log(`Year: ${this.year}`);
     console.log(`Weight: ${this.weight} lbs`);
     console.log(`Top Speed: ${this.topSpeed} mph`);
-    console.log(
-      `Wheel 1: ${this.wheels[0].getDiameter} inch with a ${this.wheels[0].getTireBrand} tire`
-    );
-    console.log(
-      `Wheel 2: ${this.wheels[1].getDiameter} inch with a ${this.wheels[1].getTireBrand} tire`
-    );
-    console.log(
-      `Wheel 3: ${this.wheels[2].getDiameter} inch with a ${this.wheels[2].getTireBrand} tire`
-    );
-    console.log(
-      `Wheel 4: ${this.wheels[3].getDiameter} inch with a ${this.wheels[3].getTireBrand} tire`
-    );
+
+    // Logs the details of each wheel using a loop.
+    for (let i = 0; i < this.wheels.length; i++) {
+      console.log(`Wheel  ${i + 1}: ${this.wheels[i].getDiameter} inches with a ${this.wheels[i].getTireBrand} tire..`);
+    }
+
+    // If had more time, could create the wheels property in the Vehicle class and use it here.
   }
 }
+
+// Exports Truck.
 export default Truck;
